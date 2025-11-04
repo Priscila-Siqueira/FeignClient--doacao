@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface DoacaoRepository extends JpaRepository<Doacao, Integer> {
     List<Doacao> findByDoadorId(Integer doadorId);
+
 }

@@ -8,6 +8,7 @@ import com.senac.doacao.repository.DoacaoRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,14 +27,15 @@ public class DoacaoService {
         // 1. Cadastrar o doador remotamente (Aluno A)
         DoadorDTO novoDoador = new DoadorDTO();
         novoDoador.setNome(request.getNomeDoador());
-        novoDoador.setEmail(request.getEmailDoador());
-
+        novoDoador.setEndereco(request.getEmailDoador());
+//
         DoadorDTO doadorCadastrado = doadorClient.cadastrarDoador(novoDoador);
 
         // 2. Criar a doação local
         Doacao nova = new Doacao();
-        nova.setData(LocalDate.now());
+        nova.setData(LocalDateTime.now());
         nova.setValor(request.getDoacaoValor());
+        nova.setDoadorId(doadorCadastrado.getId());
         nova.setStatus(1);
 
         return doacaoRepository.save(nova);

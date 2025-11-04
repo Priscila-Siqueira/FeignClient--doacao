@@ -30,23 +30,14 @@ public class DoacaoController {
      * 1️⃣ Endpoint para cadastrar um novo doador (via Feign Client)
      * POST /api/doacoes/cadastrardoador
      */
-    @PostMapping("/cadastrardoador")
-    public ResponseEntity<DoadorDTO> cadastrarDoador(@RequestBody DoadorDTO doadorDTO) {
-        try {
-            DoadorDTO novoDoador = doadorClient.cadastrarDoador(doadorDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(novoDoador);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+
 
     /**
      * 2️⃣ Endpoint para gravar uma nova doação para um doador existente
      * POST /api/doacoes/{doadorId}/nova
      */
-    @PostMapping("/{doadorId}/nova")
+    @PostMapping("nova/")
     public ResponseEntity<Doacao> gravarNovaDoacao(
-            @PathVariable Integer doadorId,
             @RequestBody DoacaoDtoRequest request) {
         try {
             // Aqui usamos o service que salva a doação local
@@ -61,23 +52,23 @@ public class DoacaoController {
      * 3️⃣ Endpoint para obter todas as doações de um doador
      * GET /api/doacoes/{doadorId}
      */
-    @GetMapping("/{doadorId}")
-    public ResponseEntity<Map<String, Object>> obterDoacoesDoUsuario(@PathVariable Integer doadorId) {
+    @GetMapping("obterDoacoesDoUsuario/{doadorId}")
+    public ResponseEntity<List<Doacao>> obterDoacoesDoUsuario(@PathVariable Integer doadorId) {
         try {
             // Busca o doador remoto via Feign
-            DoadorDTO doador = doadorClient.getDoadorById(doadorId);
+//            DoadorDTO doador = doadorClient.getDoadorById(doadorId);
 
             // Busca as doações locais pelo ID
             List<Doacao> doacoes = doacaoService.listarDoacoesPorUsuario(doadorId);
 
             // Monta a DTO de resposta
-            Map<String, Object> resposta = new HashMap<>();
-            resposta.put("idDoador", doador.getId());
-            resposta.put("nomeDoador", doador.getNome());
-            resposta.put("emailDoador", doador.getEmail());
-            resposta.put("doacoes", doacoes);
+//            Map<String, Object> resposta = new HashMap<>();
+//            resposta.put("idDoador", doador.getId());
+//            resposta.put("nomeDoador", doador.getNome());
+//            resposta.put("emailDoador", doador.getEmail());
+//            resposta.put("doacoes", doacoes);
 
-            return ResponseEntity.ok(resposta);
+            return ResponseEntity.ok(doacoes);
 
         } catch (feign.FeignException.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

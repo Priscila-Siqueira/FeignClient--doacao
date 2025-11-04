@@ -2,6 +2,7 @@ package com.senac.doacao.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "doacao")
@@ -12,7 +13,7 @@ public class Doacao {
     @Column(name = "doacao_id")
     private Integer id;
     @Column(name = "doacao_data")
-    private LocalDate data;
+    private LocalDateTime data;
     @Column(name = "doacao_valor")
     private Integer valor;
     @Column(name = "doacao_status")
@@ -30,11 +31,11 @@ public class Doacao {
         this.id = id;
     }
 
-    public LocalDate getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 

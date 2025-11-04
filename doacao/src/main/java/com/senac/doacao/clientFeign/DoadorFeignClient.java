@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 // URL pode vir do application.properties: doador.service.url=http://localhost:8081
 @Component
-@FeignClient(name = "doador", url = "http://10.136.64.33:8080", path = "api/doador")
+@FeignClient(name = "doador", url = "10.136.64.34:8081", path = "api/doador")
 public interface DoadorFeignClient {
 
     // Endpoint remoto do Aluno A (cadastra um novo doador)
-    @PostMapping(value = "/cadastrardoador")
+    @PostMapping(value = "/cadastrarDoador")
     DoadorDTO cadastrarDoador(@RequestBody DoadorDTO doador);
 
     // Endpoint remoto do Aluno A (buscar doador por ID)
